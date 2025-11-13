@@ -1,0 +1,5 @@
+# Thư mục thư viện, cài lại được bằng "npm install"
+node_modules
+
+# File chứa bí mật (API keys, passwords)
+.env
