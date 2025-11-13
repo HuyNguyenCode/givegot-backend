@@ -186,3 +186,24 @@ export async function rejectMatch(req, res) {
     return res.status(500).json({ error: err.message || err });
   }
 }
+
+
+// controller
+export async function createFeedback(req, res) {
+  try {
+    const { match_id, from_user, to_user, rating, notes } = req.body || {};
+    if (!match_id || !from_user || !to_user) return res.status(400).json({ error: 'missing fields' });
+
+    const { data, error } = await supabase
+      .from('feedbacks')
+      .insert({ match_id, from_user, to_user, rating, notes })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return res.json({ feedback: data });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message || err });
+  }
+}
